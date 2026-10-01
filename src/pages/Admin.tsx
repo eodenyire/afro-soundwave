@@ -11,6 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
 import AdminCampaignReview from "@/components/AdminCampaignReview";
+import AdminMonetizationApplications from "@/components/AdminMonetizationApplications";
 
 interface CreatorProfile {
   user_id: string;
@@ -331,6 +332,8 @@ const Admin = () => {
             </div>
 
             <AdminCampaignReview />
+
+            <AdminMonetizationApplications />
 
             <Card className="mb-8 border-primary/40">
               <CardHeader>

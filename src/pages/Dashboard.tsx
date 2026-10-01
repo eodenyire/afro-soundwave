@@ -20,6 +20,7 @@ import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import EditProfileDialog from "@/components/EditProfileDialog";
 import { formatCents } from "@/lib/earnings";
+import CreatorMonetizationPanel from "@/components/CreatorMonetizationPanel";
 
 interface CreatorEarnings {
   impressions: number;
@@ -672,6 +673,8 @@ const Dashboard = () => {
               </div>
             </CardContent>
           </Card>
+
+          <CreatorMonetizationPanel onApplied={refreshProfile} />
 
           {/* Content tabs */}
           <Tabs defaultValue="videos" className="w-full">
