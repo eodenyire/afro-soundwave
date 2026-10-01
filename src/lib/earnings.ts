@@ -69,3 +69,9 @@ export const isAdEligible = (opts: {
 
 export const formatCents = (cents: number) =>
   `$${(cents / 100).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+/** Display-only rounding for watch hours; keep the raw value for calculations. */
+export const formatHours = (n: number | null | undefined) => {
+  const v = Number(n ?? 0);
+  return v >= 100 ? Math.round(v).toLocaleString() : v.toFixed(1);
+};

@@ -19,7 +19,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import EditProfileDialog from "@/components/EditProfileDialog";
-import { formatCents } from "@/lib/earnings";
+import { formatCents, formatHours } from "@/lib/earnings";
 import CreatorMonetizationPanel from "@/components/CreatorMonetizationPanel";
 
 interface CreatorEarnings {
@@ -453,7 +453,7 @@ const Dashboard = () => {
           {/* Stats cards */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
             <StatCard icon={<Users size={18} />} label="Subscribers" value={profile?.subscriber_count ?? 0} />
-            <StatCard icon={<Clock size={18} />} label="Watch Hours" value={profile?.watch_hours ?? 0} />
+            <StatCard icon={<Clock size={18} />} label="Watch Hours" value={formatHours(profile?.watch_hours)} />
             <StatCard icon={<Eye size={18} />} label="Total Views" value={totalViews} />
             <StatCard icon={<BarChart3 size={18} />} label="Total Streams" value={totalStreams} />
           </div>
@@ -603,7 +603,7 @@ const Dashboard = () => {
                 <div>
                   <div className="flex justify-between text-sm mb-1.5">
                     <span className="text-muted-foreground">Watch Hours</span>
-                    <span className="font-medium text-foreground">{profile?.watch_hours ?? 0} / 1,000</span>
+                    <span className="font-medium text-foreground">{formatHours(profile?.watch_hours)} / 1,000</span>
                   </div>
                   <Progress value={watchHoursProgress} className="h-2.5" />
                 </div>
