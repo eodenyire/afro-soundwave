@@ -821,7 +821,7 @@ function formatRelativeTime(iso: string) {
   return `${diffDays}d ago`;
 }
 
-function StatCard({ icon, label, value }: { icon: React.ReactNode; label: string; value: number }) {
+function StatCard({ icon, label, value }: { icon: React.ReactNode; label: string; value: number | string }) {
   return (
     <Card className="bg-card border-border">
       <CardContent className="p-4 flex flex-col gap-1">
