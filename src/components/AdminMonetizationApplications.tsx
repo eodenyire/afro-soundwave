@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { BadgeCheck, Check, Loader2, RefreshCw, X } from "lucide-react";
+import { BadgeCheck, Check, Loader2, RefreshCw, Sparkles, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import AdminAiApplicationReview, { buildApplicationDetails } from "@/components/AdminAiApplicationReview";
 
 interface Application {
   id: string;
@@ -34,6 +35,7 @@ const AdminMonetizationApplications = () => {
   const [loading, setLoading] = useState(true);
   const [notes, setNotes] = useState<Record<string, string>>({});
   const [busy, setBusy] = useState<string | null>(null);
+  const [aiDetails, setAiDetails] = useState("");
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -61,6 +63,7 @@ const AdminMonetizationApplications = () => {
   };
 
   return (
+    <>
     <Card className="mb-8 border-primary/40">
       <CardHeader>
         <div className="flex items-center justify-between gap-4 flex-wrap">
@@ -115,6 +118,17 @@ const AdminMonetizationApplications = () => {
                       Now: {row.subscriber_count} subs · {hours(row.watch_hours)} h
                     </Badge>
                     {row.is_monetized && <Badge className="rounded-full">Ads on</Badge>}
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="rounded-full gap-1"
+                      onClick={() => {
+                        setAiDetails(buildApplicationDetails(row));
+                        document.getElementById("ai-application-review")?.scrollIntoView({ behavior: "smooth" });
+                      }}
+                    >
+                      <Sparkles size={14} /> AI review
+                    </Button>
                   </div>
                 </div>
 
@@ -155,6 +169,10 @@ const AdminMonetizationApplications = () => {
         )}
       </CardContent>
     </Card>
+    <div id="ai-application-review">
+      <AdminAiApplicationReview details={aiDetails} onDetailsChange={setAiDetails} />
+    </div>
+    </>
   );
 };
 
