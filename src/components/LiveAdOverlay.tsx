@@ -98,8 +98,8 @@ const LiveAdOverlay = ({ streamId, category, isMonetized, isOwner, playerEl, onF
           <img src={creativeSrc} alt={ad.headline ?? "Advertisement"} className="w-full h-full object-contain" />
         )}
       </button>
-      <div className="flex items-center justify-between gap-3 px-3 py-2 bg-black/80">
-        <span className="text-xs text-primary-foreground/70 truncate">
+      <div className="flex items-center justify-between gap-3 px-3 py-2 bg-background/95 border-t border-border">
+        <span className="text-xs text-foreground truncate">
           Ad · {ad.headline ?? "Sponsored"}
           {ad.click_url ? " · Tap to visit advertiser" : ""}
         </span>
@@ -107,7 +107,7 @@ const LiveAdOverlay = ({ streamId, category, isMonetized, isOwner, playerEl, onF
           <button
             type="button"
             onClick={() => setMuted((m) => !m)}
-            className="text-xs rounded-full px-3 py-1 bg-muted/30 text-primary-foreground"
+            className="text-xs rounded-full px-3 py-1 bg-primary text-primary-foreground font-medium"
           >
             {muted ? "Unmute" : "Mute"}
           </button>
@@ -116,7 +116,7 @@ const LiveAdOverlay = ({ streamId, category, isMonetized, isOwner, playerEl, onF
           type="button"
           onClick={close}
           disabled={remaining > 0}
-          className="text-xs rounded-full px-3 py-1 bg-muted/30 text-primary-foreground disabled:opacity-60"
+          className="text-xs rounded-full px-3 py-1 bg-primary text-primary-foreground font-medium disabled:opacity-60"
         >
           {remaining > 0 ? `Skip in ${remaining}s` : "Skip ad"}
         </button>
