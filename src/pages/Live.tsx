@@ -42,6 +42,8 @@ const formatRelative = (iso: string | null) => {
   return new Date(iso).toLocaleString();
 };
 
+const TEST_FEED_URL = "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8";
+
 const Live = () => {
   const { user } = useAuth();
   const [streams, setStreams] = useState<LiveStream[]>([]);
