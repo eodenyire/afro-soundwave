@@ -107,6 +107,17 @@ const Live = () => {
     load();
   };
 
+  const setTestFeed = async (id: string, on: boolean) => {
+    const { error } = await (supabase.from("live_streams") as any)
+      .update(on
+        ? { status: "live", playback_url: TEST_FEED_URL, hls_ready: true, started_at: new Date().toISOString() }
+        : { status: "scheduled", playback_url: null, hls_ready: false })
+      .eq("id", id);
+    if (error) return toast.error(error.message);
+    toast.success(on ? "Test feed started — open the stream to watch" : "Test feed stopped");
+    load();
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -202,6 +213,11 @@ const Live = () => {
                     {isOwner && stream.status === "scheduled" && (
                       <Button size="sm" onClick={() => goLive(stream.id)}>Go live</Button>
                     )}
+                    {isOwner && (stream.playback_url === TEST_FEED_URL ? (
+                      <Button size="sm" variant="secondary" onClick={() => setTestFeed(stream.id, false)}>Stop test feed</Button>
+                    ) : (
+                      <Button size="sm" variant="secondary" onClick={() => setTestFeed(stream.id, true)}>Start test feed</Button>
+                    ))}
                   </div>
                 </CardContent>
               </Card>
