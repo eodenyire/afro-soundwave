@@ -33,6 +33,7 @@ const Shorts = lazy(() => import("./pages/Shorts.tsx"));
 const Live = lazy(() => import("./pages/Live.tsx"));
 const LiveWatch = lazy(() => import("./pages/LiveWatch.tsx"));
 const LiveStudio = lazy(() => import("./pages/LiveStudio.tsx"));
+const StreamSetup = lazy(() => import("./pages/StreamSetup.tsx"));
 const StudioSEO = lazy(() => import("./pages/StudioSEO.tsx"));
 const Moderation = lazy(() => import("./pages/Moderation.tsx"));
 const Monitoring = lazy(() => import("./pages/Monitoring.tsx"));
@@ -80,6 +81,7 @@ const App = () => (
                   <Route path="/shorts" element={<Shorts />} />
                   <Route path="/live" element={<Live />} />
                   <Route path="/live/studio/:id" element={<LiveStudio />} />
+                  <Route path="/live/setup" element={<StreamSetup />} />
                   <Route path="/live/:id" element={<LiveWatch />} />
                   <Route path="/studio/seo" element={<StudioSEO />} />
                   <Route path="/moderation" element={<Moderation />} />
