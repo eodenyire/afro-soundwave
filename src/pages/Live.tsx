@@ -129,6 +129,11 @@ const Live = () => {
             <Radio size={24} className="text-primary" />
             <h1 className="font-display font-bold text-2xl text-foreground">Live</h1>
           </div>
+          {user && (
+            <Button asChild size="sm" variant="outline" className="ml-auto mr-2">
+              <Link to="/live/setup">Stream from my server</Link>
+            </Button>
+          )}
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
               <Button size="sm" className="gap-2">
