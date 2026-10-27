@@ -264,6 +264,85 @@ export type Database = {
         }
         Relationships: []
       }
+      api_keys: {
+        Row: {
+          created_at: string
+          id: string
+          key_hash: string
+          key_prefix: string
+          last_used_at: string | null
+          name: string
+          revoked_at: string | null
+          scopes: string[]
+          status: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          key_hash: string
+          key_prefix: string
+          last_used_at?: string | null
+          name: string
+          revoked_at?: string | null
+          scopes?: string[]
+          status?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          key_hash?: string
+          key_prefix?: string
+          last_used_at?: string | null
+          name?: string
+          revoked_at?: string | null
+          scopes?: string[]
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "api_keys_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      api_request_logs: {
+        Row: {
+          api_key_id: string
+          created_at: string
+          endpoint: string
+          id: number
+          status_code: number
+        }
+        Insert: {
+          api_key_id: string
+          created_at?: string
+          endpoint: string
+          id?: never
+          status_code: number
+        }
+        Update: {
+          api_key_id?: string
+          created_at?: string
+          endpoint?: string
+          id?: never
+          status_code?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "api_request_logs_api_key_id_fkey"
+            columns: ["api_key_id"]
+            isOneToOne: false
+            referencedRelation: "api_keys"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       audio_tracks: {
         Row: {
           artist_name: string | null
@@ -407,6 +486,30 @@ export type Database = {
             referencedColumns: ["user_id"]
           },
         ]
+      }
+      daily_reports: {
+        Row: {
+          generated_at: string
+          metrics: Json
+          report_date: string
+          subject_id: string
+          subject_type: string
+        }
+        Insert: {
+          generated_at?: string
+          metrics?: Json
+          report_date: string
+          subject_id: string
+          subject_type: string
+        }
+        Update: {
+          generated_at?: string
+          metrics?: Json
+          report_date?: string
+          subject_id?: string
+          subject_type?: string
+        }
+        Relationships: []
       }
       live_chat_messages: {
         Row: {
@@ -1030,6 +1133,14 @@ export type Database = {
         Args: { p_user_id: string }
         Returns: boolean
       }
+      create_api_key: {
+        Args: { p_name: string; p_scopes: string[] }
+        Returns: {
+          id: string
+          key: string
+          key_prefix: string
+        }[]
+      }
       create_playlist: {
         Args: {
           p_cover_url?: string
@@ -1041,6 +1152,7 @@ export type Database = {
       }
       disable_creator_ads: { Args: never; Returns: boolean }
       enable_creator_ads: { Args: never; Returns: boolean }
+      generate_daily_reports: { Args: { p_date?: string }; Returns: number }
       get_advertiser_billing_statement: {
         Args: { p_end: string; p_start: string }
         Returns: {
@@ -1071,6 +1183,18 @@ export type Database = {
           created_at: string
           kind: string
           reference: string
+        }[]
+      }
+      get_api_key_usage: {
+        Args: never
+        Returns: {
+          api_key_id: string
+          key_prefix: string
+          last_used_at: string
+          name: string
+          requests_24h: number
+          requests_7d: number
+          status: string
         }[]
       }
       get_creator_ad_dashboard: { Args: never; Returns: Json }
@@ -1132,6 +1256,21 @@ export type Database = {
         Returns: boolean
       }
       increment_streams: { Args: { track_id: string }; Returns: undefined }
+      list_api_keys: {
+        Args: { p_all?: boolean }
+        Returns: {
+          created_at: string
+          id: string
+          key_prefix: string
+          last_used_at: string
+          name: string
+          owner_name: string
+          revoked_at: string
+          scopes: string[]
+          status: string
+          user_id: string
+        }[]
+      }
       list_monetization_applications: {
         Args: { _status?: string }
         Returns: {
@@ -1183,6 +1322,7 @@ export type Database = {
         Args: { _application_id: string; _approve: boolean; _note?: string }
         Returns: boolean
       }
+      revoke_api_key: { Args: { p_key_id: string }; Returns: undefined }
       rotate_stream_key: { Args: { p_stream_id: string }; Returns: string }
       serve_ad: {
         Args: { p_ad_type?: string; p_category?: string; p_video_id: string }
